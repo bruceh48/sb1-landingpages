@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Contact from '../components/Contact.astro';
+import { cityData } from '../data/cities';
+
+export function getStaticPaths() {
+  return cityData.map(({ city, reason }) => ({
+    params: { city: city.toLowerCase() },
+    props: { city, reason }
+  }));
+}
+
+const { city, reason } = Astro.props;
+---
+
+<Layout 
+  title={`${city} SEO Company - Expert SEO Services`}
+  description={`Leading SEO company in ${city}. We help local businesses improve their online visibility and grow their customer base through effective search engine optimization.`}
+  city={city}
+>
+  <Hero city={city} />
+  
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">
+          Why Choose Our SEO Services in {city}?
+        </h2>
+        <p class="text-lg text-gray-700 mb-6">
+          {reason}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Services city={city} />
+  <Contact city={city} />
+</Layout>
